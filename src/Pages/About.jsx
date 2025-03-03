@@ -6,17 +6,17 @@ const About = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header */}
       <header className="bg-green-600 text-white py-8">
-        <div className="container mx-auto px-4 text-center">
+        {/* <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold mb-2">Your Carbon Footprint</h1>
           <p className="text-lg">
             Learn how your actions impact the planet—and how you can make a
             difference.
           </p>
-        </div>
+        </div> */}
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 flex-grow">
+      <main className="container mx-auto px-4 py-8 flex-grow mt-8">
         {/* What is Carbon Footprint */}
         <section className="mb-12">
           <h2 className="text-3xl font-semibold mb-4">
@@ -28,12 +28,12 @@ const About = () => {
             home.
           </p>
           {/* Optimized image; replace the src with an actual optimized image URL or inline SVG */}
-          <img
+          {/* <img
             src="/assets/carbon-footprint.svg"
             alt="Carbon Footprint Illustration"
             className="w-full max-w-md mx-auto"
             loading="lazy"
-          />
+          /> */}
         </section>
 
         {/* Why It Matters */}

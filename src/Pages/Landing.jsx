@@ -11,31 +11,34 @@ const LandingPage = () => {
   const { theme } = themeStore((state) => state);
 
   return (
-    <div
-      className={`w-full min-h-screen transition-colors duration-300 ${
-        theme === "dark" ? "bg-[#0b3d2f] text-white" : "bg-black text-green-900"
-      }`}
-    >
-      {/* Hero Section */}
-      <section className="w-full h-screen flex flex-col justify-center items-center text-center px-6 md:px-12">
-
-      <img
-              src={earthGifUrl}
-              alt="Revolving Earth"
-              className="w-32 h-32 md:w-40 md:h-40 animate-spin-slow"
-            />
-        <h1 className="text-5xl font-bold mb-6">
-          Reduce Your <span className="text-green-600">Carbon Footprint</span>
-        </h1>
-        <p className="text-lg mb-8">
-          Join us in the fight against climate change. Discover your environmental impact and take action to reduce it today.
-        </p>
-        <Link
-          to="/signup"
-          className="py-3 px-6 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300"
-        >
-          Get Started
-        </Link>
+    <div className="landing-page font-sans min-h-screen bg-green-50 text-green-900">
+      {/* Hero Section - Full Screen with Globe Image */}
+      <section
+        className="relative w-full h-screen flex flex-col justify-center items-center text-center text-white overflow-hidden"
+        style={{
+          backgroundImage:
+            "url('https://source.unsplash.com/1600x900/?earth,globe')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="relative z-10 px-6">
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-wide leading-tight">
+            Reduce Your Carbon Footprint 🌍
+          </h1>
+          <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
+            Every small step counts towards a greener future. Let’s build a
+            sustainable world together.
+          </p>
+          <Link
+            to="/user/dashboard"
+            className="mt-6 inline-block px-8 py-3 bg-green-600 text-white font-semibold rounded-full shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105"
+          >
+            Dashboard
+          </Link>
+        </div>
       </section>
 
       {/* Impact Statistics Section */}
