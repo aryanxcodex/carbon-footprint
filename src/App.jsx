@@ -1,6 +1,7 @@
+import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Landing from "./Pages/Landing";
-import Login from "./Pages/Login";
+const Login = lazy(() => import("./Pages/Login"));
 import Signup from "./Pages/Signup";
 import Page404 from "./Pages/Page404";
 import Dashboard from "./Pages/Dashboard";
