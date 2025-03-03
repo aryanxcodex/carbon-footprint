@@ -1,5 +1,5 @@
-// Dashboard.jsx
 import React, { useState, useEffect } from "react";
+import themeStore from "../store/themeStore";
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState({
@@ -8,6 +8,8 @@ const Dashboard = () => {
     cls: "Loading...",
     tbt: "Loading...",
   });
+
+  const { theme } = themeStore((state) => state);
 
   useEffect(() => {
     // LCP using PerformanceObserver
@@ -102,65 +104,56 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div
+      className={`min-h-screen p-8 transition-colors duration-300 ${
+        theme === "dark" ? "bg-[#0b3d2f] text-white" : "bg-gradient-to-r from-green-100 to-green-300"
+      }`}
+    >
       {/* Header */}
       <header className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 text-center">
+        <h1 className="text-4xl font-bold text-center mt-10">
           Performance Dashboard
         </h1>
-        <p className="text-center text-gray-600 mt-2">
+        <p className="text-center mt-2 text-lg">
           Monitor your website's performance metrics in real-time.
         </p>
       </header>
 
       {/* Main Metrics Grid */}
       <main className="container mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* LCP */}
-          <div className="bg-white rounded-lg shadow p-6 transition transform hover:scale-105">
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Largest Contentful Paint (LCP)
-            </h2>
-            <p className="text-3xl font-bold text-green-600">{metrics.lcp}</p>
-            <p className="text-gray-500 text-sm mt-2">
-              Time until the largest visible element is rendered.
-            </p>
+          <div className="bg-white dark:bg-[#1b5f47] rounded-lg shadow-lg p-6 transition-all hover:shadow-xl transform hover:scale-105">
+            <h2 className="text-xl font-semibold mb-2">Largest Contentful Paint (LCP)</h2>
+            <p className="text-3xl font-bold text-green-600 dark:text-green-400">{metrics.lcp}</p>
+            <p className="text-sm mt-2">Time until the largest visible element is rendered.</p>
           </div>
+
           {/* FCP */}
-          <div className="bg-white rounded-lg shadow p-6 transition transform hover:scale-105">
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              First Contentful Paint (FCP)
-            </h2>
-            <p className="text-3xl font-bold text-green-600">{metrics.fcp}</p>
-            <p className="text-gray-500 text-sm mt-2">
-              Time until the first content is rendered.
-            </p>
+          <div className="bg-white dark:bg-[#1b5f47] rounded-lg shadow-lg p-6 transition-all hover:shadow-xl transform hover:scale-105">
+            <h2 className="text-xl font-semibold mb-2">First Contentful Paint (FCP)</h2>
+            <p className="text-3xl font-bold text-green-600 dark:text-green-400">{metrics.fcp}</p>
+            <p className="text-sm mt-2">Time until the first content is rendered.</p>
           </div>
+
           {/* TBT */}
-          <div className="bg-white rounded-lg shadow p-6 transition transform hover:scale-105">
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Total Blocking Time (TBT)
-            </h2>
-            <p className="text-3xl font-bold text-green-600">{metrics.tbt}</p>
-            <p className="text-gray-500 text-sm mt-2">
-              Duration during which the main thread is blocked.
-            </p>
+          <div className="bg-white dark:bg-[#1b5f47] rounded-lg shadow-lg p-6 transition-all hover:shadow-xl transform hover:scale-105">
+            <h2 className="text-xl font-semibold mb-2">Total Blocking Time (TBT)</h2>
+            <p className="text-3xl font-bold text-green-600 dark:text-green-400">{metrics.tbt}</p>
+            <p className="text-sm mt-2">Duration during which the main thread is blocked.</p>
           </div>
+
           {/* CLS */}
-          <div className="bg-white rounded-lg shadow p-6 transition transform hover:scale-105">
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Cumulative Layout Shift (CLS)
-            </h2>
-            <p className="text-3xl font-bold text-green-600">{metrics.cls}</p>
-            <p className="text-gray-500 text-sm mt-2">
-              Measure of visual stability as the page loads.
-            </p>
+          <div className="bg-white dark:bg-[#1b5f47] rounded-lg shadow-lg p-6 transition-all hover:shadow-xl transform hover:scale-105">
+            <h2 className="text-xl font-semibold mb-2">Cumulative Layout Shift (CLS)</h2>
+            <p className="text-3xl font-bold text-green-600 dark:text-green-400">{metrics.cls}</p>
+            <p className="text-sm mt-2">Measure of visual stability as the page loads.</p>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="mt-8 text-center text-gray-500">
+      <footer className="mt-8 text-center text-gray-500 dark:text-gray-400">
         <p>Data updated in real-time.</p>
       </footer>
     </div>
