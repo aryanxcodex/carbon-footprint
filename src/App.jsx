@@ -20,8 +20,8 @@ function App() {
       {/* Public Routes */}
       <Route element={<PublicLayout />}>
         <Route path="/" element={<Landing />} />
-        <Route path="login" element={<Login />}/>
-        <Route path="signup" element={<Signup />}/>
+        <Route path="/login" element={<Login />}/>
+        <Route path="/signup" element={<Signup />}/>
 
         <Route path="about" element={<About />} />
 
