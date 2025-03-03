@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-// import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebar';
 // import TopNavbar from '../components/TopNavbar';
 
 const MainLayout = ({ role }) => {
@@ -8,7 +8,7 @@ const MainLayout = ({ role }) => {
     <div className="flex">
       <Sidebar />
       <div className="flex-1">
-        <TopNavbar />
+        {/* <TopNavbar /> */}
         <Outlet /> 
       </div>
     </div>
