@@ -1,40 +1,48 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons'; // Social Media Icons
-import { Link } from 'react-router-dom';
-import themeStore from '../store/themeStore';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+  faLinkedin,
+} from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
+import themeStore from "../store/themeStore";
 
 const Footer = () => {
-  // Theme Switcher (Got Values from themeStore (Zustand))
   const { theme } = themeStore((state) => state);
 
   return (
     <footer
-      className={`w-full py-8 px-10 border-t transition-colors duration-300 ${
-        theme === 'dark'
-          ? 'bg-[#121212] border-gray-600 text-white'
-          : 'bg-white border-gray-200 text-black'
+      className={`w-full py-8 px-6 md:px-10 border-t transition-colors duration-300 ${
+        theme === "dark"
+          ? "bg-[#0b3d2f] border-green-800 text-white"
+          : "bg-gradient-to-r from-green-100 to-green-300 border-green-200 text-green-900"
       }`}
     >
-      <div className="max-w-[85%] mx-auto flex flex-col md:flex-row justify-between items-center">
+      <div className="max-w-[85%] mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
         {/* Logo and Description */}
-        <div className="mb-6 md:mb-0">
-          <h1 className="text-2xl font-bold">TradingTick</h1>
+        <div className="mb-6 md:mb-0 w-full md:w-1/3">
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            🌍 Carbon Footprint
+          </h1>
           <p
-            className={`mt-2 transition-colors ${
-              theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+            className={`mt-2 text-sm ${
+              theme === "dark" ? "text-green-300" : "text-green-700"
             }`}
           >
-            Your trusted partner in trading insights.
+            Together for a greener future. 🌱
           </p>
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-wrap gap-6 justify-center md:justify-start">
+        <div className="flex flex-wrap gap-4 justify-center md:justify-start w-full md:w-1/3">
           <Link
             to="/"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'
+              theme === "dark"
+                ? "text-green-300 hover:text-white"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             Home
@@ -42,7 +50,9 @@ const Footer = () => {
           <Link
             to="/about"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'
+              theme === "dark"
+                ? "text-green-300 hover:text-white"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             About
@@ -50,7 +60,9 @@ const Footer = () => {
           <Link
             to="/signup"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'
+              theme === "dark"
+                ? "text-green-300 hover:text-white"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             Sign Up
@@ -58,7 +70,9 @@ const Footer = () => {
           <Link
             to="/login"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'
+              theme === "dark"
+                ? "text-green-300 hover:text-white"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             Login
@@ -66,13 +80,15 @@ const Footer = () => {
         </div>
 
         {/* Social Media Icons */}
-        <div className="flex gap-4 mt-6 md:mt-0">
+        <div className="flex gap-4 mt-6 md:mt-0 w-full md:w-1/3 justify-center md:justify-end">
           <a
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-[#6a4dfa]' : 'text-gray-600 hover:text-[#6a4dfa]'
+              theme === "dark"
+                ? "text-green-300 hover:text-green-500"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             <FontAwesomeIcon icon={faFacebook} size="lg" />
@@ -82,7 +98,9 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-[#6a4dfa]' : 'text-gray-600 hover:text-[#6a4dfa]'
+              theme === "dark"
+                ? "text-green-300 hover:text-green-500"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             <FontAwesomeIcon icon={faTwitter} size="lg" />
@@ -92,7 +110,9 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-[#6a4dfa]' : 'text-gray-600 hover:text-[#6a4dfa]'
+              theme === "dark"
+                ? "text-green-300 hover:text-green-500"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             <FontAwesomeIcon icon={faInstagram} size="lg" />
@@ -102,7 +122,9 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={`transition-colors duration-300 ease-in-out ${
-              theme === 'dark' ? 'text-gray-400 hover:text-[#6a4dfa]' : 'text-gray-600 hover:text-[#6a4dfa]'
+              theme === "dark"
+                ? "text-green-300 hover:text-green-500"
+                : "text-green-700 hover:text-green-900"
             }`}
           >
             <FontAwesomeIcon icon={faLinkedin} size="lg" />
@@ -112,11 +134,11 @@ const Footer = () => {
 
       {/* Footer Bottom Section */}
       <div
-        className={`mt-8 pt-4 text-center transition-colors duration-300 ${
-          theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+        className={`mt-8 pt-4 text-sm text-center ${
+          theme === "dark" ? "text-green-300" : "text-green-700"
         }`}
       >
-        © {new Date().getFullYear()} TradingTick. All rights reserved.
+        © {new Date().getFullYear()} Carbon Footprint. All rights reserved. 🌎
       </div>
     </footer>
   );
