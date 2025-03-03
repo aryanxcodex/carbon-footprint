@@ -24,7 +24,7 @@ const Footer = () => {
         {/* Logo and Description */}
         <div className="mb-6 md:mb-0 w-full md:w-1/3">
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            🌍 Carbon Footprint
+            🌍 Green Future
           </h1>
           <p
             className={`mt-2 text-sm ${

@@ -24,7 +24,7 @@ const Header = () => {
       {/* Logo with Leaf Icon */}
       <div className="font-bold text-xl flex items-center gap-2">
         <FontAwesomeIcon icon={faLeaf} className="text-green-600 text-2xl" />
-        Carbon Footprint
+        Green Future
       </div>
 
       {/* Mobile Menu Icon */}
