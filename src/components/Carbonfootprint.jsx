@@ -1,4 +1,4 @@
-// CarbonFootprintPage.jsx
+
 import React from "react";
 
 const CarbonFootprintPage = () => {

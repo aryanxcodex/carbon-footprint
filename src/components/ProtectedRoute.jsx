@@ -1,20 +1,16 @@
 import React ,{ useEffect } from 'react'
 import useAuthStore from '../store/authStore'
-import useStockStore from "../store/stockStore";
+
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({children}) => {
 
-    const {isLoggedIn} = useAuthStore((state) => state)
-    const { connectToSSE } = useStockStore(); // ✅ Get connect function only
-
-    useEffect(() => {
-      connectToSSE(); // ✅ Connect only once
-    }, []);
+    const {isAuthenticated} = useAuthStore((state) => state)
+  
     
   return (
     <>
-      {isLoggedIn ? children : <Navigate to = '/login'/>}
+      {isAuthenticated ? children : <Navigate to = '/login'/>}
     </>
   )
 }

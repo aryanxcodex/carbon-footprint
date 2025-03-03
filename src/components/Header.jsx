@@ -1,86 +1,174 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMoon,
-  faSun,
-  faBars,
-  faLeaf,
-} from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import themeStore from "../store/themeStore";
+import { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaSun, FaMoon, FaLeaf, FaBars, FaTimes, FaUser } from 'react-icons/fa'
+import useEnergyStore from '../store/energySTore'
+import authStore from '../store/authStore'
+import EnergyIndicator from './EnergyIndicator'
 
 const Header = () => {
-  const { theme, changeTheme } = themeStore((state) => state);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const {
+    isLowEnergyMode,
+    isDarkMode,
+    batteryLevel,
+    setIsLowEnergyMode,
+    setIsDarkMode,
+  } = useEnergyStore();
+  const { isAuthenticated, logout } = authStore()
+  const navigate = useNavigate()
+
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode
+    setIsDarkMode(newMode)
+    if (newMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+
+  const toggleEnergyMode = () => {
+    setIsLowEnergyMode(!isLowEnergyMode)
+  }
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
 
   return (
-    <nav
-      className={`w-full h-20 px-6 md:px-10 fixed top-0 left-0 shadow-md flex justify-between items-center z-10 border-b transition-colors duration-300 ${
-        theme === "dark"
-          ? "bg-[#0b3d2f] border-green-800 text-white"
-          : "bg-gradient-to-r from-green-100 to-green-300 text-green-900 border-green-200"
-      }`}
-    >
-      {/* Logo with Leaf Icon */}
-      <div className="font-bold text-xl flex items-center gap-2">
-        <FontAwesomeIcon icon={faLeaf} className="text-green-600 text-2xl" />
-        Green Future
+    <header className="bg-white dark:bg-dark shadow-md transition-colors duration-300">
+      <div className="container mx-auto py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="text-2xl font-bold text-primary flex items-center">
+            <FaLeaf className="mr-2" />
+            <span>EcoFootprint</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+            <Link to="/about" className="hover:text-primary transition-colors">About</Link>
+            <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/dashboard" className="hover:text-primary transition-colors">Dashboard</Link>
+                <button 
+                  onClick={handleLogout}
+                  className="hover:text-primary transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="hover:text-primary transition-colors">Login</Link>
+                <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+              </>
+            )}
+          </nav>
+
+          {/* Controls */}
+          <div className="hidden md:flex items-center space-x-4">
+            <EnergyIndicator />
+            
+            <button 
+              onClick={toggleEnergyMode}
+              className={`p-2 rounded-full transition-colors ${
+                isLowEnergyMode ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-dark-light'
+              }`}
+              aria-label="Toggle energy saving mode"
+              title={`Energy saving mode: ${isLowEnergyMode ? 'On' : 'Off'}`}
+            >
+              <FaLeaf />
+            </button>
+            
+            <button 
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full bg-gray-200 dark:bg-dark-light transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? <FaSun /> : <FaMoon />}
+            </button>
+            
+            {batteryLevel < 100 && (
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                🔋 {Math.round(batteryLevel)}%
+              </div>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden p-2"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-4 py-4 border-t border-gray-200 dark:border-gray-700">
+            <nav className="flex flex-col space-y-4">
+              <Link to="/" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Home</Link>
+              <Link to="/about" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>About</Link>
+              <Link to="/contact" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+              {isAuthenticated ? (
+                <>
+                  <Link to="/user/dashboard" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+                  <button 
+                    onClick={() => {
+                      handleLogout()
+                      setIsMenuOpen(false)
+                    }}
+                    className="hover:text-primary transition-colors text-left"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Login</Link>
+                  <Link to="/signup" className="btn btn-primary inline-block w-max" onClick={() => setIsMenuOpen(false)}>Sign Up</Link>
+                </>
+              )}
+              
+              <div className="flex items-center space-x-4 pt-2">
+                <EnergyIndicator />
+                
+                <button 
+                  onClick={toggleEnergyMode}
+                  className={`p-2 rounded-full transition-colors ${
+                    isLowEnergyMode ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-dark-light'
+                  }`}
+                  aria-label="Toggle energy saving mode"
+                >
+                  <FaLeaf />
+                </button>
+                
+                <button 
+                  onClick={toggleDarkMode}
+                  className="p-2 rounded-full bg-gray-200 dark:bg-dark-light transition-colors"
+                  aria-label="Toggle dark mode"
+                >
+                  {isDarkMode ? <FaSun /> : <FaMoon />}
+                </button>
+                
+                {batteryLevel < 100 && (
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
+                    🔋 {Math.round(batteryLevel)}%
+                  </div>
+                )}
+              </div>
+            </nav>
+          </div>
+        )}
       </div>
+    </header>
+  )
+}
 
-      {/* Mobile Menu Icon */}
-      <div
-        className="md:hidden cursor-pointer"
-        onClick={() => setMenuOpen(!menuOpen)}
-      >
-        <FontAwesomeIcon icon={faBars} className="text-2xl text-green-700" />
-      </div>
-
-      {/* Navigation Links */}
-      <div
-        className={`absolute md:static top-20 left-0 w-full md:w-auto flex flex-col md:flex-row items-center gap-4 md:gap-10 py-4 md:py-0 px-6 md:px-0 transition-all duration-300 ${
-          menuOpen ? "block" : "hidden md:flex"
-        } ${
-          theme === "dark"
-            ? "bg-[#0b3d2f] md:bg-transparent text-white"
-            : "bg-green-50 md:bg-transparent text-green-900"
-        }`}
-      >
-        <Link
-          to="/"
-          className="py-2 px-4 rounded-md transition-colors duration-300 hover:bg-green-500 hover:text-white"
-        >
-          Home
-        </Link>
-        <Link
-          to="/about"
-          className="py-2 px-4 rounded-md transition-colors duration-300 hover:bg-green-500 hover:text-white"
-        >
-          About
-        </Link>
-        <Link
-          to="/signup"
-          className="py-2 px-4 rounded-md transition-colors duration-300 hover:bg-green-500 hover:text-white"
-        >
-          Sign Up
-        </Link>
-
-        {/* Theme Toggle */}
-        <FontAwesomeIcon
-          icon={theme === "light" ? faMoon : faSun}
-          className="cursor-pointer hover:text-green-600 transition-colors duration-300 text-xl"
-          onClick={changeTheme}
-        />
-
-        {/* Login Button */}
-        <Link
-          to="/login"
-          className="py-2 px-6 rounded-md transition duration-300 ease-in-out focus:ring-2 focus:ring-green-500 bg-green-100 text-green-800 hover:bg-green-600 hover:text-white"
-        >
-          Login
-        </Link>
-      </div>
-    </nav>
-  );
-};
-
-export default Header;
+export default Header

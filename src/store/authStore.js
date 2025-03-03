@@ -5,22 +5,22 @@ const useAuthStore = create(
   persist(
     (set) => ({
       // Initial state
-      isLoggedIn: true,
-      role: null,
-      user: null,
+      isAuthenticated: false,
+      role: "user",
+      user: "user",
 
       // Function to log in the user
       setLogIn: (user) =>
         set(() => ({
-          isLoggedIn: true,
-          role: user.role,
-          user: user,
+          isAuthenticated: true,
+          role: "user",
+          user: "user",
         })),
 
       // Function to log out the user
       setLogOut: () =>
         set(() => ({
-          isLoggedIn: false,
+          isAuthenticated: false,
           role: null,
           user: null,
         })),

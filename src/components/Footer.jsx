@@ -1,147 +1,102 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebook,
-  faTwitter,
-  faInstagram,
-  faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
-import { Link } from "react-router-dom";
-import themeStore from "../store/themeStore";
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { FaLeaf, FaTwitter, FaFacebook, FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa'
+import useEnergyStore from '../store/energySTore'
 
 const Footer = () => {
-  const { theme } = themeStore((state) => state);
-
+ 
+  const { energyUsage,savedEnergy} = useEnergyStore();
+  
+  // Calculate carbon footprint (simplified model)
+  const carbonSaved = savedEnergy * 0.5 // kg CO2 per kWh (simplified)
+  
   return (
-    <footer
-      className={`w-full py-8 px-6 md:px-10 border-t transition-colors duration-300 ${
-        theme === "dark"
-          ? "bg-[#0b3d2f] border-green-800 text-white"
-          : "bg-gradient-to-r from-green-100 to-green-300 border-green-200 text-green-900"
-      }`}
-    >
-      <div className="max-w-[85%] mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-        {/* Logo and Description */}
-        <div className="mb-6 md:mb-0 w-full md:w-1/3">
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            🌍 Green Future
-          </h1>
-          <p
-            className={`mt-2 text-sm ${
-              theme === "dark" ? "text-green-300" : "text-green-700"
-            }`}
-          >
-            Together for a greener future. 🌱
-          </p>
+    <footer className="bg-white dark:bg-dark shadow-inner transition-colors duration-300 mt-12">
+      <div className="container mx-auto py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="col-span-1">
+            <Link to="/" className="text-xl font-bold text-primary flex items-center">
+              <FaLeaf className="mr-2" />
+              <span>EcoFootprint</span>
+            </Link>
+            <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+              Raising awareness about carbon footprints and promoting sustainable digital practices.
+            </p>
+          </div>
+          
+          {/* Quick Links */}
+          <div className="col-span-1">
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li><Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Home</Link></li>
+              <li><Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">About</Link></li>
+              <li><Link to="/contact" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link to="/login" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Login</Link></li>
+              <li><Link to="/signup" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Sign Up</Link></li>
+            </ul>
+          </div>
+          
+          {/* Resources */}
+          <div className="col-span-1">
+            <h3 className="text-lg font-semibold mb-4">Resources</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Carbon Calculator</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Eco Tips</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Sustainability Guide</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Research Papers</a></li>
+            </ul>
+          </div>
+          
+          {/* Energy Stats */}
+          <div className="col-span-1">
+            <h3 className="text-lg font-semibold mb-4">Our Impact</h3>
+            <div className="bg-gray-100 dark:bg-dark-light p-4 rounded-lg">
+              <div className="mb-2">
+                <span className="text-sm text-gray-600 dark:text-gray-400">Energy Saved:</span>
+                <span className="ml-2 font-medium">{savedEnergy.toFixed(6)} kWh</span>
+              </div>
+              <div>
+                <span className="text-sm text-gray-600 dark:text-gray-400">CO₂ Reduced:</span>
+                <span className="ml-2 font-medium">{carbonSaved.toFixed(6)} kg</span>
+              </div>
+              <div className="mt-4 text-xs text-gray-500 dark:text-gray-500">
+                This website is designed to minimize energy consumption.
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Navigation Links */}
-        <div className="flex flex-wrap gap-4 justify-center md:justify-start w-full md:w-1/3">
-          <Link
-            to="/"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-white"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-white"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            About
-          </Link>
-          <Link
-            to="/signup"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-white"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            Sign Up
-          </Link>
-          <Link
-            to="/login"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-white"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            Login
-          </Link>
+        
+        {/* Bottom Section */}
+        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              © {new Date().getFullYear()} EcoFootprint. All rights reserved.
+            </div>
+            
+            {/* Social Links */}
+            <div className="flex space-x-4 mt-4 md:mt-0">
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                <FaTwitter />
+              </a>
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                <FaFacebook />
+              </a>
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                <FaInstagram />
+              </a>
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                <FaLinkedin />
+              </a>
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                <FaGithub />
+              </a>
+            </div>
+          </div>
         </div>
-
-        {/* Social Media Icons */}
-        <div className="flex gap-4 mt-6 md:mt-0 w-full md:w-1/3 justify-center md:justify-end">
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-green-500"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            <FontAwesomeIcon icon={faFacebook} size="lg" />
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-green-500"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            <FontAwesomeIcon icon={faTwitter} size="lg" />
-          </a>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-green-500"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            <FontAwesomeIcon icon={faInstagram} size="lg" />
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`transition-colors duration-300 ease-in-out ${
-              theme === "dark"
-                ? "text-green-300 hover:text-green-500"
-                : "text-green-700 hover:text-green-900"
-            }`}
-          >
-            <FontAwesomeIcon icon={faLinkedin} size="lg" />
-          </a>
-        </div>
-      </div>
-
-      {/* Footer Bottom Section */}
-      <div
-        className={`mt-8 pt-4 text-sm text-center ${
-          theme === "dark" ? "text-green-300" : "text-green-700"
-        }`}
-      >
-        © {new Date().getFullYear()} Carbon Footprint. All rights reserved. 🌎
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

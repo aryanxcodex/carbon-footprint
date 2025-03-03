@@ -1,94 +1,137 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLeaf, faChartLine, faRecycle } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import themeStore from "../store/themeStore";
-
-// URL of the Earth GIF (you can replace this with any hosted image or link to an Earth image you have)
-const earthGifUrl = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnQzdjg0eXpqcW5rdjVlbm5tZ3V4bjd6ejRqbHBhcmtrNnp5N3BydiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7WIB00yXujVt4WEo/giphy.gif";
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { FaLeaf, FaChartLine, FaUsers, FaGlobeAmericas } from 'react-icons/fa'
+import Globe from '../components/Globe'
+import EnergyTracker from '../Pages/EnergyTracker'
+import useEnergyStore from '../store/energySTore'
 
 const LandingPage = () => {
-  const { theme } = themeStore((state) => state);
-
+  const { isLowEnergyMode, setIsLowEnergyMode } = useEnergyStore();
+  
   return (
-    <div className="landing-page font-sans min-h-screen bg-green-50 text-green-900">
-      {/* Hero Section - Full Screen with Globe Image */}
-      <section
-        className="relative w-full h-screen flex flex-col justify-center items-center text-center text-white overflow-hidden"
-        style={{
-          backgroundImage:
-            "url('https://source.unsplash.com/1600x900/?earth,globe')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="relative z-10 px-6">
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-wide leading-tight">
-            Reduce Your Carbon Footprint 🌍
-          </h1>
-          <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
-            Every small step counts towards a greener future. Let’s build a
-            sustainable world together.
+    <div>
+      {/* Hero Section with Globe */}
+      <section className="relative">
+        <Globe />
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+          <div className="text-center text-white p-4">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">Reduce Your Carbon Footprint</h1>
+            <p className="text-xl md:text-2xl mb-8">Together we can make a difference for our planet</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link to="/about" className="btn btn-primary">Learn More</Link>
+              <button 
+                onClick={() => setIsLowEnergyMode(!isLowEnergyMode)}
+                className={`btn ${isLowEnergyMode ? 'btn-secondary' : 'btn-outline text-white'}`}
+              >
+                {isLowEnergyMode ? 'Eco Mode: ON' : 'Activate Eco Mode'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Energy Tracker Section */}
+      <section className="container mx-auto py-12">
+        <h2 className="text-3xl font-bold text-center mb-8">Real-Time Energy Impact</h2>
+        <EnergyTracker />
+      </section>
+      
+      {/* Features Section */}
+      <section className="bg-gray-100 dark:bg-dark-light py-12 transition-colors duration-300">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose EcoFootprint?</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="card p-6">
+              <div className="text-primary text-4xl mb-4">
+                <FaLeaf />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Energy Efficient</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Our website is designed to minimize energy consumption, automatically switching to dark mode 
+                after 5:00 PM and offering a low-energy browsing option.
+              </p>
+            </div>
+            
+            <div className="card p-6">
+              <div className="text-primary text-4xl mb-4">
+                <FaChartLine />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Real-Time Tracking</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Monitor your energy consumption and carbon footprint reduction in real-time with our 
+                advanced tracking dashboard.
+              </p>
+            </div>
+            
+            <div className="card p-6">
+              <div className="text-primary text-4xl mb-4">
+                <FaUsers />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Community Focused</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Join a community of environmentally conscious individuals working together to reduce 
+                global carbon emissions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Call to Action */}
+      <section className="py-16 bg-primary text-white">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Make a Difference?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Join thousands of users who are actively reducing their carbon footprint and contributing to a healthier planet.
           </p>
-          <Link
-            to="/user/dashboard"
-            className="mt-6 inline-block px-8 py-3 bg-green-600 text-white font-semibold rounded-full shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105"
-          >
-            Dashboard
+          <Link to="/signup" className="btn bg-white text-primary hover:bg-gray-100 transition-colors">
+            Sign Up Now
           </Link>
         </div>
       </section>
-
-      {/* Impact Statistics Section */}
-      <section className="py-16 px-6 md:px-12 bg-gradient-to-r from-green-100 to-green-300">
-        <h2 className="text-4xl font-bold text-center mb-12">Our Impact</h2>
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-col items-center text-center">
-            <FontAwesomeIcon icon={faLeaf} className="text-green-700 text-6xl mb-4" />
-            <h3 className="text-2xl font-bold">500,000+ Trees Planted</h3>
-            <p className="text-lg">
-              We contribute to reforestation projects across the globe.
-            </p>
+      
+      {/* Latest News/Blog Preview */}
+      <section className="container mx-auto py-12">
+        <h2 className="text-3xl font-bold text-center mb-8">Latest Insights</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="card overflow-hidden">
+            <div className="h-48 bg-gray-300 dark:bg-gray-700"></div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Understanding Your Digital Carbon Footprint</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Learn how your online activities contribute to carbon emissions and what you can do to minimize your impact.
+              </p>
+              <a href="#" className="text-primary hover:underline">Read More →</a>
+            </div>
           </div>
-          <div className="flex flex-col items-center text-center">
-            <FontAwesomeIcon icon={faChartLine} className="text-green-700 text-6xl mb-4" />
-            <h3 className="text-2xl font-bold">1M+ Tons CO2 Saved</h3>
-            <p className="text-lg">
-              Our community has actively reduced carbon emissions worldwide.
-            </p>
+          
+          <div className="card overflow-hidden">
+            <div className="h-48 bg-gray-300 dark:bg-gray-700"></div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">The Future of Sustainable Web Design</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Explore how web designers and developers are creating more energy-efficient websites and applications.
+              </p>
+              <a href="#" className="text-primary hover:underline">Read More →</a>
+            </div>
           </div>
-          <div className="flex flex-col items-center text-center">
-            <FontAwesomeIcon icon={faRecycle} className="text-green-700 text-6xl mb-4" />
-            <h3 className="text-2xl font-bold">80% Recycling Rate</h3>
-            <p className="text-lg">
-              We've helped organizations reach high recycling efficiency.
-            </p>
+          
+          <div className="card overflow-hidden">
+            <div className="h-48 bg-gray-300 dark:bg-gray-700"></div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Simple Steps to Reduce Your Carbon Footprint</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Practical tips and lifestyle changes that can help you minimize your environmental impact.
+              </p>
+              <a href="#" className="text-primary hover:underline">Read More →</a>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section with Revolving Earth Image */}
-      <section className="py-16 px-6 md:px-12 text-center">
-        <h2 className="text-4xl font-bold mb-8">Take Action Now</h2>
-        <p className="text-lg mb-8">
-          Calculate your carbon footprint and receive personalized recommendations to reduce it. Together, we can make a difference.
-        </p>
-        <Link
-          to="/calculate"
-          className="py-3 px-6 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300 inline-block"
-        >
-          Calculate Now
-        </Link>
-        <div className="mt-8 flex justify-center items-center">
-          <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
-            <p className="mt-4 text-lg">Visit Google Earth</p>
-          </a>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

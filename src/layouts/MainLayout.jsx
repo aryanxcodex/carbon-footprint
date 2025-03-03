@@ -8,7 +8,7 @@ const MainLayout = ({ role }) => {
     <div className="flex">
       <div className="flex-1">
       <Header />
-      <Outlet /> {/* This is where your public route content will appear */}
+      <Outlet /> 
       <Footer />
       </div>
     </div>
